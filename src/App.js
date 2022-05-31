@@ -7,20 +7,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Country from "./components/Country";
 // import Rest from "./components/Rest";
 import Credits from "./components/Credits";
-const BASE_URL = "https://restcountries.eu/rest/v2/";
-Array.prototype.remove = function () {
-	var what,
-		a = arguments,
-		L = a.length,
-		ax;
-	while (L && this.length) {
-		what = a[--L];
-		while ((ax = this.indexOf(what)) !== -1) {
-			this.splice(ax, 1);
-		}
-	}
-	return this;
-};
+
+const BASE_URL = "https://restcountries.com/v2/";
 function App() {
 	const getInitialMode = () => {
 		const savedMode = JSON.parse(localStorage.getItem("dark"));
@@ -80,14 +68,16 @@ function App() {
 					.then((data) => {
 						setLoading(true);
 						if (data.length) {
-							const tempCountries = data.map((country) => {
+							let tempCountries = data.map((country) => {
 								if (
 									country.region.toLowerCase() === regionQuery
 								) {
 									return country;
 								}
 							});
-							tempCountries.remove(undefined);
+							tempCountries = tempCountries.filter(
+								(item) => item !== undefined
+							);
 							if (tempCountries.length) {
 								setCountries(tempCountries);
 							} else {
@@ -103,6 +93,7 @@ function App() {
 				fetch(`${BASE_URL}name/${countryName}`)
 					.then((response) => response.json())
 					.then((data) => {
+						console.log(data);
 						setCountries(data);
 					});
 			}

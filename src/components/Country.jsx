@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import "./Country.css";
-const BASE_URL = "https://restcountries.eu/rest/v2/";
+const BASE_URL = "https://restcountries.com/v2/";
 function Country(props) {
 	const countryName = props.match.params.countryName;
 	const code = props.match.params.countrycode;
